@@ -9,7 +9,7 @@ import com.bumiayu.dicoding.capstonemovieproject.R
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delayMillis = 3000L
+    private val delayMillis = 10L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

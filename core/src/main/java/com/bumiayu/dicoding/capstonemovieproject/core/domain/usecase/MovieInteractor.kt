@@ -9,7 +9,7 @@ import com.bumiayu.dicoding.capstonemovieproject.core.domain.repository.IMovieRe
 import kotlinx.coroutines.flow.Flow
 
 class MovieInteractor(private val movieRepository: IMovieRepository) : MovieUseCase {
-    override fun getMovies(sort: String): Flow<Resource<PagingData<Movie>>> = movieRepository.getMovies(sort)
+    override fun getMovies(sort: String): Flow<Resource<PagingData<Movie>>> = movieRepository.getPopularMovies(sort)
 
     override fun getSearchMovies(query: String?): Flow<Resource<PagingData<Movie>>> = movieRepository.getSearchMovies(query)
 

@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<T : ViewBinding>(val viewBinder: (LayoutInflater) -> T): AppCompatActivity() {
+abstract class BaseActivity<B : ViewBinding>(val viewBinder: (LayoutInflater) -> B) : AppCompatActivity() {
 
-    protected lateinit var binding: T
+    protected lateinit var binding: B
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = viewBinder(layoutInflater)
         setContentView(binding.root)
 
@@ -19,7 +19,7 @@ abstract class BaseActivity<T : ViewBinding>(val viewBinder: (LayoutInflater) ->
         observeViewModel()
     }
 
-    protected abstract fun T.onCreate(savedInstanceState: Bundle?)
+    protected abstract fun B.onCreate(savedInstanceState: Bundle?)
 
     protected abstract fun observeViewModel()
 }

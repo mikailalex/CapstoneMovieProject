@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.room.Room
 import com.bumiayu.dicoding.capstonemovieproject.core.BuildConfig.BASE_URL
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.MovieRepository
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.RemoteMediatorMovie
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.LocalMovieDataSource
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.AppDatabase
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.RemoteMovieDataSource
@@ -45,9 +46,9 @@ val networkModule = module {
     }
 }
 
-@ExperimentalPagingApi
+@OptIn(ExperimentalPagingApi::class)
 val repositoryModule = module {
     single { LocalMovieDataSource(get()) }
     single { RemoteMovieDataSource(get()) }
-    single<IMovieRepository> { MovieRepository(get(), get()) }
+    single<IMovieRepository> { MovieRepository(get(), get(), get(), get()) }
 }

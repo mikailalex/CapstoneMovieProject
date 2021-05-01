@@ -1,5 +1,6 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.data.source
 
+import android.util.Log
 import com.bumiayu.dicoding.capstonemovieproject.core.data.Resource
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiResponse
 import kotlinx.coroutines.flow.*
@@ -7,6 +8,7 @@ import kotlinx.coroutines.flow.*
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private var result: Flow<Resource<ResultType>> = flow {
+        Log.d("aaaaaa", "onNetworkBound")
         emit(Resource.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {

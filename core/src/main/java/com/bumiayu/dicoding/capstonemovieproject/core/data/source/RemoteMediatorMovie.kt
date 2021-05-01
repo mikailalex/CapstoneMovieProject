@@ -15,20 +15,17 @@ import java.io.IOException
 
 private const val STARTING_PAGE_INDEX = 1
 
-@ExperimentalPagingApi
+@OptIn(ExperimentalPagingApi::class)
 class RemoteMediatorMovie(
-    private val type: TypePagingData,
+    private val typeMovie: TypePagingDataMovie,
     private val service: ApiService,
     private val database: AppDatabase,
     private val query: String = ""
 ) : RemoteMediator<Int, MovieEntity>() {
 
     override suspend fun initialize(): InitializeAction {
-        // Require that remote REFRESH is launched on initial load and succeeds before launching
-        // remote PREPEND / APPEND.
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
-
 
     override suspend fun load(
         loadType: LoadType,
@@ -42,22 +39,12 @@ class RemoteMediatorMovie(
             }
             LoadType.PREPEND -> {
                 val remoteKeys = database.remoteKeysDao().remoteKeysRepoId()
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for prepend.
                 val prevKey = remoteKeys?.prevKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKeys = database.remoteKeysDao().remoteKeysRepoId()
-                // If remoteKeys is null, that means the refresh result is not in the database yet.
-                // We can return Success with `endOfPaginationReached = false` because Paging
-                // will call this method again if RemoteKeys becomes non-null.
-                // If remoteKeys is NOT NULL but its prevKey is null, that means we've reached
-                // the end of pagination for append.
                 val nextKey = remoteKeys?.nextKey
                     ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
                 nextKey
@@ -65,8 +52,8 @@ class RemoteMediatorMovie(
         }
 
         try {
-            when (type) {
-                TypePagingData.MOVIE_POPULAR -> {
+            when (typeMovie) {
+                TypePagingDataMovie.MOVIE_POPULAR -> {
                     val apiResponse = service.getPopularMovies(page = page)
 
                     val resultMovieEntity =
@@ -74,7 +61,7 @@ class RemoteMediatorMovie(
                     val endOfPaginationReached = apiResponse.results.isEmpty()
                     database.withTransaction {
                         // clear all tables in the database
-                        if (loadType == LoadType.REFRESH) {
+                        if (loadType == LoadType.APPEND) {
                             database.remoteKeysDao().clearRemoteKeys()
                         }
                         val prevKey =
@@ -90,7 +77,7 @@ class RemoteMediatorMovie(
                     }
                     return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
                 }
-                TypePagingData.TV_SHOW_POPULAR -> {
+                TypePagingDataMovie.MOVIE_NOW_PLAYING -> {
                     service.getPopularTvShows(page = page)
                     return MediatorResult.Success(endOfPaginationReached = false)
                 }

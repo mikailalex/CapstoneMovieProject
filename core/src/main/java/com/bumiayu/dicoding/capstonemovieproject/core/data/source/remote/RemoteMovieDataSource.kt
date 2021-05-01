@@ -17,6 +17,7 @@ class RemoteMovieDataSource(private val apiService: ApiService) {
         EspressoIdlingResource.increment()
         return flow {
             try {
+                Log.d("aaaaaa", "onRemote")
                 val response = apiService.getPopularMovies()
                 val data = response.results
                 if (data.isNotEmpty()) {

@@ -2,6 +2,7 @@ package com.bumiayu.dicoding.capstonemovieproject.ui.movie
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumiayu.dicoding.capstonemovieproject.core.ui.BaseFragment
@@ -13,7 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MovieFragment : BaseFragment<FragmentMovieBinding>({ FragmentMovieBinding.inflate(it) }) {
 
     private val viewModel: MovieViewModel by viewModel()
-    private val movieAdapter by lazy { MovieAdapter() }
+    private val movieAdapter = MovieAdapter()
 
     override fun FragmentMovieBinding.onViewCreated(savedInstanceState: Bundle?) {
         val orientation = resources.configuration.orientation
@@ -30,9 +31,9 @@ class MovieFragment : BaseFragment<FragmentMovieBinding>({ FragmentMovieBinding.
         }
         lifecycleScope.launch {
             viewModel.getMovies("Title").collectLatest { it.data?.let { it1 ->
-                movieAdapter.submitData(
-                    it1
-                )
+                movieAdapter.submitData(it1)
+                movieAdapter.notifyDataSetChanged()
+                Log.d("aaaaaa", it1.toString())
             } }
         }
     }

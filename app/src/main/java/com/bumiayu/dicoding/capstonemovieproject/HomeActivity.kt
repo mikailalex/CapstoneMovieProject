@@ -1,6 +1,7 @@
 package com.bumiayu.dicoding.capstonemovieproject
 
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController

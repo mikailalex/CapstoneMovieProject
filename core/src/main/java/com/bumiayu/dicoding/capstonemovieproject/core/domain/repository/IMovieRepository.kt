@@ -8,7 +8,7 @@ import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.MovieDe
 import kotlinx.coroutines.flow.Flow
 
 interface IMovieRepository {
-    fun getMovies(sort: String): Flow<Resource<PagingData<Movie>>>
+    fun getPopularMovies(sort: String): Flow<Resource<PagingData<Movie>>>
     fun getSearchMovies(query: String?): Flow<Resource<PagingData<Movie>>>
     fun getDetailsMovie(movieId: Int): Flow<Resource<MovieDetail>>
     fun getFavoriteMovies(): LiveData<PagingData<MovieDetail>>
