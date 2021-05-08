@@ -5,6 +5,7 @@ import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.respons
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.response.MoviesResponse
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.response.TvShowDetailResponse
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.response.TvShowsResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,32 +17,48 @@ interface ApiService {
         @Query("page") page: Int? = 1
     ): MoviesResponse
 
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovies(
+        @Query("api_key") apiKey: String = MOVIEDB_API_KEY,
+        @Query("page") page: Int? = 1,
+        @Query("region") region: String = "id"
+    ): MoviesResponse
+
     @GET("search/movie")
     suspend fun getSearchMovies(
         @Query("api_key") apiKey: String = MOVIEDB_API_KEY,
-        @Query("query") query: String?
+        @Query("query") query: String?,
+        @Query("page") page: Int? = 1
     ): MoviesResponse
 
     @GET("movie/{movie_id}")
-    fun getDetailMovie(
+    suspend fun getDetailMovie(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = MOVIEDB_API_KEY
     ): MovieDetailResponse
 
     @GET("tv/popular")
-    fun getPopularTvShows(
+    suspend fun getPopularTvShows(
         @Query("api_key") apiKey: String = MOVIEDB_API_KEY,
         @Query("page") page: Int? = 1
     ): TvShowsResponse
 
-    @GET("search/tv")
-    fun getSearchTvShows(
+    @GET("tv/on_the_air")
+    suspend fun getOnTheAirTvShows(
         @Query("api_key") apiKey: String = MOVIEDB_API_KEY,
-        @Query("query") query: String?
+        @Query("page") page: Int? = 1,
+        @Query("region") region: String = "id"
+    ): TvShowsResponse
+
+    @GET("search/tv")
+    suspend fun getSearchTvShows(
+        @Query("api_key") apiKey: String = MOVIEDB_API_KEY,
+        @Query("query") query: String?,
+        @Query("page") page: Int? = 1
     ): TvShowsResponse
 
     @GET("tv/{tv_id}")
-    fun getDetailsTvShow(
+    suspend fun getDetailTvShow(
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String = MOVIEDB_API_KEY
     ): TvShowDetailResponse

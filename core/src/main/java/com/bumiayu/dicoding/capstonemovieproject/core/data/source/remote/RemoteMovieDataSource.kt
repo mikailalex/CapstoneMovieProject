@@ -21,7 +21,7 @@ class RemoteMovieDataSource(private val apiService: ApiService) {
                 val response = apiService.getPopularMovies()
                 val data = response.results
                 if (data.isNotEmpty()) {
-                    emit(ApiResponse.Succes(data))
+                    emit(ApiResponse.Success(data))
                 } else {
                     emit(ApiResponse.Empty)
                 }
@@ -41,7 +41,7 @@ class RemoteMovieDataSource(private val apiService: ApiService) {
                 val response = apiService.getSearchMovies(query = query)
                 val data = response.results
                 if (data.isNotEmpty()) {
-                    emit(ApiResponse.Succes(data))
+                    emit(ApiResponse.Success(data))
                 } else {
                     emit(ApiResponse.Empty)
                 }
@@ -54,18 +54,18 @@ class RemoteMovieDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getDetailsMovie(movieId: Int): Flow<ApiResponse<MovieDetailResponse>>{
-        EspressoIdlingResource.increment()
-        return flow {
-            try {
-                val response = apiService.getDetailMovie(movieId)
-                emit(ApiResponse.Succes(response))
-            } catch (e: Exception){
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSourceMovies", e.toString())
-            } finally {
-                EspressoIdlingResource.decrement()
-            }
-        }.flowOn(Dispatchers.IO)
-    }
+//    suspend fun getDetailsMovie(movieId: Int): Flow<ApiResponse<MovieDetailResponse>>{
+//        EspressoIdlingResource.increment()
+//        return flow {
+//            try {
+//                val response = apiService.getDetailMovie(movieId)
+//                emit(ApiResponse.Success(response))
+//            } catch (e: Exception){
+//                emit(ApiResponse.Error(e.toString()))
+//                Log.e("RemoteDataSourceMovies", e.toString())
+//            } finally {
+//                EspressoIdlingResource.decrement()
+//            }
+//        }.flowOn(Dispatchers.IO)
+//    }
 }

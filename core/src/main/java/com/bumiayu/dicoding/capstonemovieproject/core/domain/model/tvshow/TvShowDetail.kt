@@ -4,7 +4,7 @@ data class TvShowDetail(
     val id: Int?,
     val title: String?,
     val description: String?,
-    val genre: List<GenresTvShow>?,
+    val genres: List<GenresTvShow>?,
     val releaseDate: String?,
     val score: Double?,
     val imgPoster: String?,

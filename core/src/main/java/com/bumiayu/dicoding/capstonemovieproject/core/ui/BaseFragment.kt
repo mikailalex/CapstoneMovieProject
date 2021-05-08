@@ -26,7 +26,6 @@ abstract class BaseFragment<T : ViewBinding>(val viewBinder: (LayoutInflater) ->
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding?.onViewCreated(savedInstanceState)
-        observeViewModel()
     }
 
     override fun onDestroyView() {
@@ -36,5 +35,4 @@ abstract class BaseFragment<T : ViewBinding>(val viewBinder: (LayoutInflater) ->
 
     protected abstract fun T.onViewCreated(savedInstanceState: Bundle?)
 
-    protected abstract fun observeViewModel()
 }

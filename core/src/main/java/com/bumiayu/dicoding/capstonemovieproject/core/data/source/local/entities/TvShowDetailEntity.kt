@@ -18,7 +18,7 @@ data class TvShowDetailEntity(
     @ColumnInfo(name = "description")
     val description: String?,
     @ColumnInfo(name = "genre")
-    val genre: List<GenresItemTvShow>?,
+    val genres: List<GenresItemTvShow>?,
     @ColumnInfo(name = "release_date")
     val releaseDate: String?,
     @ColumnInfo(name = "score")

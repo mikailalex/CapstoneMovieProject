@@ -16,10 +16,7 @@ abstract class BaseActivity<B : ViewBinding>(val viewBinder: (LayoutInflater) ->
         setContentView(binding.root)
 
         binding.onCreate(savedInstanceState)
-        observeViewModel()
     }
 
     protected abstract fun B.onCreate(savedInstanceState: Bundle?)
-
-    protected abstract fun observeViewModel()
 }

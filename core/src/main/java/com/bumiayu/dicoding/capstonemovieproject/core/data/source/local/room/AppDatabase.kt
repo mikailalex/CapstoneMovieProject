@@ -13,5 +13,6 @@ import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities
 @TypeConverters(GenresMovieTypeConverter::class, GenresTvShowTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
+    abstract fun tvShowDao(): TvShowDao
     abstract fun remoteKeysDao(): RemoteKeysDao
 }

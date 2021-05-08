@@ -21,8 +21,7 @@ data class TvShowsResponse(
 ) : Parcelable
 
 @Parcelize
-data class TvShowItemSearch
-    (
+data class TvShowItemSearch(
 
     @field:SerializedName("first_air_date")
     val firstAirDate: String,

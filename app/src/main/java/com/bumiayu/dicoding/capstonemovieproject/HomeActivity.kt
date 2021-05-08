@@ -18,5 +18,4 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>({ ActivityHomeBinding.inf
         binding.bottomNavMain.setupWithNavController(navController)
     }
 
-    override fun observeViewModel() {}
 }

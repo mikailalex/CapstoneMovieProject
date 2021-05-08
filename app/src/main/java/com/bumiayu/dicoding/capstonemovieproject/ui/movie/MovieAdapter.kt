@@ -12,7 +12,7 @@ import com.bumiayu.dicoding.capstonemovieproject.databinding.ItemGridBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVIE_COMPARATOR) {
+class MovieAdapter(private val onClickListener: IOnClickListener) : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVIE_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -40,7 +40,7 @@ class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVI
                     )
                     .into(imgItemPhoto)
 
-//                itemView.setOnClickListener { onClickListener.onClick(movie) }
+                itemView.setOnClickListener { onClickListener.onClick(movie) }
             }
         }
     }
@@ -55,5 +55,9 @@ class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(MOVI
                 return oldItem == newItem
             }
         }
+    }
+
+    interface IOnClickListener {
+        fun onClick(movie: Movie)
     }
 }

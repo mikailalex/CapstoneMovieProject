@@ -1,11 +1,13 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.MovieDetailEntity
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -19,7 +21,7 @@ interface MovieDao {
     fun getListSearchMovies(query: String?): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM tb_detail_movie WHERE id = :id")
-    fun getDetailMovieById(id: Int): MovieDetailEntity
+    fun getDetailMovieById(id: Int): Flow<MovieDetailEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE, entity = MovieEntity::class)
     suspend fun insertMovies(movies: List<MovieEntity>)
@@ -27,15 +29,6 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE, entity = MovieDetailEntity::class)
     suspend fun insertDetailMovie(movie: MovieDetailEntity)
 
-    @Update(entity = MovieEntity::class)
-    fun updateMovie(movie: MovieEntity)
-
     @Update(entity = MovieDetailEntity::class)
     fun updateDetailMovie(movie: MovieDetailEntity)
-
-    @Query("DELETE FROM tb_detail_movie")
-    suspend fun clearDetailMovie()
-
-    @Query("DELETE FROM tb_list_movies")
-    suspend fun clearMovie()
 }

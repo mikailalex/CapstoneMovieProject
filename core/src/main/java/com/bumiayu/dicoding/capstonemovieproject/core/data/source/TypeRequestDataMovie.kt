@@ -1,6 +1,7 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.data.source
 
-enum class TypePagingDataMovie {
+enum class TypeRequestDataMovie {
     MOVIE_POPULAR,
-    MOVIE_NOW_PLAYING
+    MOVIE_NOW_PLAYING,
+    MOVIE_SEARCH
 }

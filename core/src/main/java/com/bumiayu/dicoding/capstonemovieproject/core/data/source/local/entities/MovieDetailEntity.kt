@@ -18,7 +18,7 @@ data class MovieDetailEntity(
     @ColumnInfo(name = "description")
     val description: String?,
     @ColumnInfo(name = "genre")
-    val genre: List<GenresItemMovie>?,
+    val genres: List<GenresItemMovie>?,
     @ColumnInfo(name = "release_date")
     val releaseDate: String?,
     @ColumnInfo(name = "score")

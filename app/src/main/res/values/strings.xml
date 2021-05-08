@@ -8,4 +8,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_poster">Image Poster</string>
+    <string name="retry">Retry</string>
+    <string name="no_results">No Result</string>
+    <string name="add_to_favorite">Add To Favorite</string>
+    <string name="overview_detail">Detail description</string>
+    <string name="genre_duration">Score, Genre, Release date</string>
+    <string name="image_backdrop">Image backdrop</string>
+    <string name="overview">Description</string>
+    <string name="score_genre_release_date">%1$s ✰\n%2$s\n%3$s</string>
 </resources>
