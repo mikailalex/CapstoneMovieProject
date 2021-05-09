@@ -25,11 +25,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TvShowFragment : BaseFragment<FragmentTvShowBinding>({ FragmentTvShowBinding.inflate(it) }), TvShowAdapter.IOnclickListener {
 
-    private val viewModel: TvShowViewModel by viewModel()
+    private val viewModel: TvShowViewModel by sharedViewModel()
     private val adapterTvPopular = TvShowAdapter(this)
     private val adapterTvOnTheAir = TvShowAdapter(this)
     private val adapterOtherTv = TvShowAdapter(this)
@@ -37,9 +38,9 @@ class TvShowFragment : BaseFragment<FragmentTvShowBinding>({ FragmentTvShowBindi
     override fun FragmentTvShowBinding.onViewCreated(savedInstanceState: Bundle?) {
         initAdapter()
         lifecycleScope.launch {
-            viewModel.getTvShowOnTheAir().onEach { adapterTvOnTheAir.submitData(it) }.launchIn(this)
-            viewModel.getPopularTvShows().onEach { adapterTvPopular.submitData(it) }.launchIn(this)
-            viewModel.getTvShows("Title").collectLatest { adapterOtherTv.submitData(it) }
+            viewModel.getTvShowOnTheAir.onEach { adapterTvOnTheAir.submitData(it) }.launchIn(this)
+            viewModel.getPopularTvShows.onEach { adapterTvPopular.submitData(it) }.launchIn(this)
+            viewModel.getTvShows.collectLatest { adapterOtherTv.submitData(it) }
         }
     }
 

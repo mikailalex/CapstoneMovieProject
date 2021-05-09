@@ -113,10 +113,7 @@ class MovieRepository(
                         emit(ApiResponse.Success(response))
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        emit(
-                            ApiResponse.Error(
-                                e.message.toString()
-                            )
+                        emit(ApiResponse.Error(e.message.toString())
                         )
                     }
                 }
@@ -157,7 +154,6 @@ class MovieRepository(
     override fun setFavoriteMovie(movie: MovieDetail) {
         val movieDetailEntity = movie.toMovieDetailEntity()
         movieDetailEntity.isFavorite = !movieDetailEntity.isFavorite
-        Log.d("000repomovSet", movieDetailEntity.toString())
         CoroutineScope(Dispatchers.IO).launch {
             appDatabase.movieDao().updateDetailMovie(movieDetailEntity)
         }

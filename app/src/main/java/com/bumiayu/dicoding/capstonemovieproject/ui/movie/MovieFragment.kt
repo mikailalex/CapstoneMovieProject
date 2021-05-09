@@ -3,10 +3,8 @@ package com.bumiayu.dicoding.capstonemovieproject.ui.movie
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,11 +19,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MovieFragment : BaseFragment<FragmentMovieBinding>({ FragmentMovieBinding.inflate(it) }),
     MovieAdapter.IOnClickListener {
 
-    private val viewModel: MovieViewModel by viewModels<>()
+    private val viewModel: MovieViewModel by sharedViewModel()
     private val adapterMoviePopular = MovieAdapter(this)
     private val adapterMovieInTheater = MovieAdapter(this)
     private val adapterOtherMovie = MovieAdapter(this)

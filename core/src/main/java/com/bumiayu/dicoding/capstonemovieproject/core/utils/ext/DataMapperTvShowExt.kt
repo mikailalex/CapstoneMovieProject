@@ -41,17 +41,23 @@ fun TvShowDetailResponse.toTvShowDetailEntity(): TvShowDetailEntity =
         this.backdropPath
     )
 
-fun TvShowDetailEntity.toTvShowDetail(): TvShowDetail =
-    TvShowDetail(
-        this.id,
-        this.title,
-        this.description,
-        this.genres?.map { it.toGenresTvShow() },
-        this.releaseDate,
-        this.score,
-        this.imgPoster,
-        this.imgBackground
-    )
+fun TvShowDetailEntity?.toTvShowDetail(): TvShowDetail? {
+    if (this != null) {
+        TvShowDetail(
+            this.id,
+            this.title,
+            this.description,
+            this.genres?.map { it.toGenresTvShow() },
+            this.releaseDate,
+            this.score,
+            this.imgPoster,
+            this.imgBackground,
+            this.isFavorite
+        )
+    }
+    return null
+}
+
 
 fun TvShowDetail.toTvShowDetailEntity(): TvShowDetailEntity =
     TvShowDetailEntity(
@@ -62,7 +68,8 @@ fun TvShowDetail.toTvShowDetailEntity(): TvShowDetailEntity =
         this.releaseDate,
         this.score,
         this.imgPoster,
-        this.imgBackground
+        this.imgBackground,
+        this.isFavorite
     )
 
 fun List<TvShowItemSearch>.toListTvShowEntity(): List<TvShowEntity> =

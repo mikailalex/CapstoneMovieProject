@@ -6,7 +6,9 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.AppDatabase
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.RemoteTvShowPagingDataSource
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiResponse
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiService
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.response.TvShowDetailResponse
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.Resource
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.tvshow.TvShow
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.tvshow.TvShowDetail
@@ -16,11 +18,12 @@ import com.bumiayu.dicoding.capstonemovieproject.core.utils.SortUtils.TV_SHOW_TA
 import com.bumiayu.dicoding.capstonemovieproject.core.utils.ext.toTvShow
 import com.bumiayu.dicoding.capstonemovieproject.core.utils.ext.toTvShowDetail
 import com.bumiayu.dicoding.capstonemovieproject.core.utils.ext.toTvShowDetailEntity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class TvShowRepository(
     private val appDatabase: AppDatabase,
@@ -86,41 +89,29 @@ class TvShowRepository(
 
     // Online
     override fun getDetailsTvShow(tvShowId: Int): Flow<Resource<TvShowDetail>> =
-        flow {
-            val dataDb = appDatabase.tvShowDao().getDetailTvShowById(tvShowId)
-            if (dataDb != null) {
-                emit(Resource.Success(dataDb.toTvShowDetail()))
-            } else {
-                try {
-                    val response = apiService.getDetailTvShow(tvShowId).toTvShowDetailEntity()
-                    appDatabase.tvShowDao().insertDetailTvShow(response)
-                    emit(Resource.Success(response.toTvShowDetail()))
-                } catch (e: Exception) {
-                    emit(Resource.Error<TvShowDetail>(e.toString()))
+        object : NetworkBoundResource<TvShowDetail, TvShowDetailResponse>() {
+            override fun loadFromDB(): Flow<TvShowDetail?> =
+                appDatabase.tvShowDao().getDetailTvShowById(tvShowId).map {
+                    it.toTvShowDetail()
                 }
-            }
-        }.flowOn(Dispatchers.IO)
 
-//        object : NetworkBoundResource<TvShowDetail, TvShowDetailResponse>() {
-//            override fun loadFromDB(): LiveData<TvShowDetail> =
-//                flow { emit(appDatabase.tvShowDao().getDetailTvShowById(tvShowId).to) }
-//
-//            override fun shouldFetch(data: TvShowDetail?): Boolean = data == null
-//
-//            override suspend fun createCall(): LiveData<ApiResponse<TvShowDetailResponse>> =
-//                flow {
-//                    try {
-//                        val response = apiService.getDetailTvShow(tvShowId)
-//                        emit(ApiResponse.Success(response))
-//                    } catch (e: Exception) {
-//                        emit(ApiResponse.Error(e.toString()))
-//                    }
-//                }.flowOn(Dispatchers.IO)
-//
-//            override suspend fun saveCallResult(data: TvShowDetailResponse) =
-//                appDatabase.tvShowDao().insertDetailTvShow(data.toTvShowDetailEntity())
-//
-//        }.asFlow()
+            override fun shouldFetch(data: TvShowDetail?): Boolean = data == null
+
+            override suspend fun createCall(): Flow<ApiResponse<TvShowDetailResponse>> =
+                flow {
+                    try {
+                        val response = apiService.getDetailTvShow(tvShowId)
+                        emit(ApiResponse.Success(response))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        emit(ApiResponse.Error(e.toString()))
+                    }
+                }
+
+            override suspend fun saveCallResult(data: TvShowDetailResponse) =
+                appDatabase.tvShowDao().insertDetailTvShow(data.toTvShowDetailEntity())
+
+        }.asFlow()
 
     // Offline
     override fun getFavoriteTvShows(): Flow<PagingData<TvShowDetail>> =
@@ -128,11 +119,13 @@ class TvShowRepository(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
             pagingSourceFactory = { appDatabase.tvShowDao().getListFavoriteTvShows() }
         ).flow.map { pagingData ->
-            pagingData.map { it.toTvShowDetail() }
+            pagingData.map { it.toTvShowDetail()!! }
         }
 
     override fun setFavoriteTvShow(tvShow: TvShowDetail) {
-        tvShow.isFavorite = !tvShow.isFavorite
-        appDatabase.tvShowDao().updateDetailTvShow(tvShow.toTvShowDetailEntity())
+        CoroutineScope(Dispatchers.IO).launch {
+            tvShow.isFavorite = !tvShow.isFavorite
+            appDatabase.tvShowDao().updateDetailTvShow(tvShow.toTvShowDetailEntity())
+        }
     }
 }

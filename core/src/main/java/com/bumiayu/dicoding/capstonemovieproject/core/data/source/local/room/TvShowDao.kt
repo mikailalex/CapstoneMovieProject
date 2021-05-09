@@ -5,6 +5,7 @@ import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.TvShowDetailEntity
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.TvShowEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TvShowDao {
@@ -18,7 +19,7 @@ interface TvShowDao {
     fun getListSearchTvShows(query: String): PagingSource<Int, TvShowEntity>
 
     @Query("SELECT * FROM tb_detail_tvshow WHERE id = :tvShowId")
-    suspend fun getDetailTvShowById(tvShowId: Int): TvShowDetailEntity?
+    fun getDetailTvShowById(tvShowId: Int): Flow<TvShowDetailEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE, entity = TvShowEntity::class)
     suspend fun insertTvShows(tvShows: List<TvShowEntity>)

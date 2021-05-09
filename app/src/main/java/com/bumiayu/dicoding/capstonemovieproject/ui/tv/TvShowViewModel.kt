@@ -18,14 +18,11 @@ class TvShowViewModel(private val useCase: TvShowUseCase): ViewModel() {
         this.tvShow = tvShow
     }
 
-    fun getTvShows(sortBy: String): Flow<PagingData<TvShow>> =
-        useCase.getTvShows(sortBy).cachedIn(viewModelScope)
+    val getTvShows: Flow<PagingData<TvShow>> = useCase.getTvShows("Title").cachedIn(viewModelScope)
 
-    fun getPopularTvShows(): Flow<PagingData<TvShow>> =
-        useCase.getPopularTvShows().cachedIn(viewModelScope)
+    val getPopularTvShows: Flow<PagingData<TvShow>> = useCase.getPopularTvShows().cachedIn(viewModelScope)
 
-    fun getTvShowOnTheAir(): Flow<PagingData<TvShow>> =
-        useCase.getTvShowOnTheAir().cachedIn(viewModelScope)
+    val getTvShowOnTheAir: Flow<PagingData<TvShow>> = useCase.getTvShowOnTheAir().cachedIn(viewModelScope)
 
     fun getSearchTvShows(query: String): Flow<PagingData<TvShow>> =
         useCase.getSearchTvShows(query).cachedIn(viewModelScope)

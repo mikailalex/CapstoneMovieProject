@@ -24,16 +24,8 @@ class MovieViewModel(private val useCase: MovieUseCase) : ViewModel() {
     val getMovies: Flow<PagingData<Movie>> = useCase.getMovies("Title").cachedIn(viewModelScope)
 
     val getPopularMovies: Flow<PagingData<Movie>> = useCase.getPopularMovies().cachedIn(viewModelScope)
-//        val result = useCase.getPopularMovies()
-//        result.cachedIn(viewModelScope)
-//        return result
-//    }
 
     val getNowPlayingMovies: Flow<PagingData<Movie>> = useCase.getNowPlayingMovies().cachedIn(viewModelScope)
-//        val result = useCase.getNowPlayingMovies()
-//        result.cachedIn(viewModelScope)
-//        return result
-//    }
 
     fun getSearchMovies(query: String): Flow<PagingData<Movie>> =
         useCase.getSearchMovies(query).cachedIn(viewModelScope)
