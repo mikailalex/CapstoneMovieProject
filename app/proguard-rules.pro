@@ -63,6 +63,8 @@
 # Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
 -dontwarn kotlin.Unit
 
+# Ignore some class in OkHttp platform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
 
 # With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
