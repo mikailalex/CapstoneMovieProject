@@ -1,6 +1,8 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.tv
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,7 +12,7 @@ import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.tvshow.TvShow
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.usecase.TvShowUseCase
 import kotlinx.coroutines.flow.Flow
 
-class TvShowViewModel(private val useCase: TvShowUseCase): ViewModel() {
+class TvShowViewModel(private val useCase: TvShowUseCase) : ViewModel() {
 
     private lateinit var tvShow: TvShowDetail
 
@@ -20,17 +22,22 @@ class TvShowViewModel(private val useCase: TvShowUseCase): ViewModel() {
 
     val getTvShows: Flow<PagingData<TvShow>> = useCase.getTvShows("Title").cachedIn(viewModelScope)
 
-    val getPopularTvShows: Flow<PagingData<TvShow>> = useCase.getPopularTvShows().cachedIn(viewModelScope)
+    val getPopularTvShows: Flow<PagingData<TvShow>> =
+        useCase.getPopularTvShows().cachedIn(viewModelScope)
 
-    val getTvShowOnTheAir: Flow<PagingData<TvShow>> = useCase.getTvShowOnTheAir().cachedIn(viewModelScope)
+    val getOnTheAirTvShows: Flow<PagingData<TvShow>> =
+        useCase.getOnTheAirTvShows().cachedIn(viewModelScope)
 
-    fun getSearchTvShows(query: String): Flow<PagingData<TvShow>> =
-        useCase.getSearchTvShows(query).cachedIn(viewModelScope)
+    val getTopRatedTvShows: Flow<PagingData<TvShow>> =
+        useCase.getTopRatedTvShows().cachedIn(viewModelScope)
+
+    fun getSearchTvShows(query: String): LiveData<PagingData<TvShow>> =
+        useCase.getSearchTvShows(query).cachedIn(viewModelScope).asLiveData()
 
     fun getDetailsTvShow(TvShowId: Int): Flow<Resource<TvShowDetail>> =
         useCase.getDetailsTvShow(TvShowId)
 
-    fun getFavoriteTvShows(): Flow<PagingData<TvShowDetail>> =
+    val getFavoriteTvShows: Flow<PagingData<TvShowDetail>> =
         useCase.getFavoriteTvShows().cachedIn(viewModelScope)
 
     fun setFavoriteTvShow() =

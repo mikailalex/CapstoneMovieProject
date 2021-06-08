@@ -25,7 +25,7 @@ interface TvShowDao {
     suspend fun insertTvShows(tvShows: List<TvShowEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE, entity = TvShowDetailEntity::class)
-    fun insertDetailTvShow(tvShow: TvShowDetailEntity)
+    suspend fun insertDetailTvShow(tvShow: TvShowDetailEntity)
 
     @Update(entity = TvShowDetailEntity::class)
     fun updateDetailTvShow(tvShow: TvShowDetailEntity)

@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="bg_transparent">#40000000</color>
+
+    <color name="colorPrimary">#5C4949</color>
+    <color name="colorPrimaryDark">#434242</color>
+    <color name="colorAccent">#8C6E65</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="textInputOutlineColor">#FBB8AC</color>
 </resources>

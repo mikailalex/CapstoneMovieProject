@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/movieFragment">
+    app:startDestination="@id/movieBaseFragment">
 
     <fragment
-        android:id="@+id/movieFragment"
-        android:name="com.bumiayu.dicoding.capstonemovieproject.ui.movie.MovieFragment"
+        android:id="@+id/movieBaseFragment"
+        android:name="com.bumiayu.dicoding.capstonemovieproject.ui.movie.MovieBaseFragment"
         android:label="MovieFragment"
         tools:layout="@layout/fragment_movie" />
 
     <fragment
-        android:id="@+id/tvShowFragment"
-        android:name="com.bumiayu.dicoding.capstonemovieproject.ui.tv.TvShowFragment"
+        android:id="@+id/tvShowBaseFragment"
+        android:name="com.bumiayu.dicoding.capstonemovieproject.ui.tv.TvShowBaseFragment"
         android:label="TvShowFragment"
         tools:layout="@layout/fragment_tv_show" />
 
@@ -22,4 +22,11 @@
         android:name="com.bumiayu.dicoding.capstonemovieproject.ui.detail.DetailActivity"
         android:label="DetailActivity"
         tools:layout="@layout/activity_detail" />
+
+    <fragment
+        android:id="@+id/favoriteBaseFragment"
+        android:name="com.bumiayu.dicoding.favorite.FavoriteBaseFragment"
+        app:moduleName="CapstoneMovieProject.favorite"
+        android:label="fragment_favorite_base"
+        tools:layout="@layout/fragment_favorite_base" />
 </navigation>

@@ -1,7 +1,6 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -53,7 +52,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>({ ActivityDetailBindi
                     is Resource.Success -> {
                         loadingState(true)
                         loadDataMovie(movie.data)
-                        Log.d("000detail", movie.data.toString())
                         movie.data?.let { movieViewModel.setMovie(it) }
                         setFavoriteState(movie.data?.isFavorite)
                     }
@@ -113,7 +111,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>({ ActivityDetailBindi
                 when (movie) {
                     is Resource.Loading -> loadingState(true)
                     is Resource.Success -> {
-                        loadingState(true)
+                        loadingState(false)
                         loadDataTvShow(movie.data)
                         movie.data?.let { tvShowViewModel.setTvShow(it) }
                         setFavoriteState(movie.data?.isFavorite)

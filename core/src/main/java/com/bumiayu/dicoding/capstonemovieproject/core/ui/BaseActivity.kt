@@ -1,7 +1,6 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding

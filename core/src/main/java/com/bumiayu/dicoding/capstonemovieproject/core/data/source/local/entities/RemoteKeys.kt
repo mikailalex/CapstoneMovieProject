@@ -9,11 +9,13 @@ data class RemoteKeys(
     val prevKey: Int?,
     val nextKey: Int?,
     @PrimaryKey(autoGenerate = false)
-    // id 1 for Popular Movie
-    // id 2 for Now Playing Movie
-    // id 3 for Search Movie
-    // id 4 for Popular Tv Shows
-    // id 5 for Tv Shows On The Air
-    // id 6 for Search Tv Show
+    // id 1 for Search Movie
+    // id 2 for Popular Movie
+    // id 3 for Now Playing Movie
+    // id 4 for Top Rated Movie
+    // id 5 for Search Tv Show
+    // id 6 for Popular Tv Shows
+    // id 7 for On The Air Tv Shows
+    // id 8 for Top Rated Tv Shows
     val id: Int
 )

@@ -43,7 +43,7 @@ fun TvShowDetailResponse.toTvShowDetailEntity(): TvShowDetailEntity =
 
 fun TvShowDetailEntity?.toTvShowDetail(): TvShowDetail? {
     if (this != null) {
-        TvShowDetail(
+        return TvShowDetail(
             this.id,
             this.title,
             this.description,
@@ -57,7 +57,6 @@ fun TvShowDetailEntity?.toTvShowDetail(): TvShowDetail? {
     }
     return null
 }
-
 
 fun TvShowDetail.toTvShowDetailEntity(): TvShowDetailEntity =
     TvShowDetailEntity(

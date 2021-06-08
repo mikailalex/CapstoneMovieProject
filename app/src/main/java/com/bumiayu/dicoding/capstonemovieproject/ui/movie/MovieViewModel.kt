@@ -1,7 +1,8 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.movie
 
-import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,9 +11,7 @@ import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.Movie
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.MovieDetail
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.usecase.MovieUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
-@SuppressLint("CheckResult")
 class MovieViewModel(private val useCase: MovieUseCase) : ViewModel() {
 
     private lateinit var movie: MovieDetail
@@ -23,17 +22,22 @@ class MovieViewModel(private val useCase: MovieUseCase) : ViewModel() {
 
     val getMovies: Flow<PagingData<Movie>> = useCase.getMovies("Title").cachedIn(viewModelScope)
 
-    val getPopularMovies: Flow<PagingData<Movie>> = useCase.getPopularMovies().cachedIn(viewModelScope)
+    val getPopularMovies: Flow<PagingData<Movie>> =
+        useCase.getPopularMovies().cachedIn(viewModelScope)
 
-    val getNowPlayingMovies: Flow<PagingData<Movie>> = useCase.getNowPlayingMovies().cachedIn(viewModelScope)
+    val getNowPlayingMovies: Flow<PagingData<Movie>> =
+        useCase.getNowPlayingMovies().cachedIn(viewModelScope)
 
-    fun getSearchMovies(query: String): Flow<PagingData<Movie>> =
-        useCase.getSearchMovies(query).cachedIn(viewModelScope)
+    val getTopRatedMovies: Flow<PagingData<Movie>> =
+        useCase.getTopRatedMovies().cachedIn(viewModelScope)
+
+    fun getSearchMovies(query: String): LiveData<PagingData<Movie>> =
+        useCase.getSearchMovies(query).cachedIn(viewModelScope).asLiveData()
 
     fun getDetailsMovie(movieId: Int): Flow<Resource<MovieDetail>> =
         useCase.getDetailsMovie(movieId)
 
-    fun getFavoriteMovies(): Flow<PagingData<MovieDetail>> =
+    val getFavoriteMovies: Flow<PagingData<MovieDetail>> =
         useCase.getFavoriteMovies().cachedIn(viewModelScope)
 
     fun setFavoriteMovie() = useCase.setFavoriteMovie(movie)

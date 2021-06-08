@@ -30,6 +30,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 is ApiResponse.Error -> {
                     onFetchFailed()
                     emit(
+                        //Generic type is needed, don't delete
                         Resource.Error<ResultType>(
                             apiResponse.errorMessage
                         )

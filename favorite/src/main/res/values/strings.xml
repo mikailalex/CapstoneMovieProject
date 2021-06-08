@@ -1,0 +1,7 @@
+<resources>
+    <string name="title_movie">Title Movie</string>
+    <string name="genres_movie">Genres Movie</string>
+    <string name="release_date_movie">Release Date Movie</string>
+    <string name="your_favorite_s_movie_will_be_show_here">Your favorite\'s movie will be show here…</string>
+    <string name="your_favorite_s_tv_show_will_be_show_here">Your favorite\'s tv show will be show here…</string>
+</resources>

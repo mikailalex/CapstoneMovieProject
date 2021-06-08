@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.AppDatabase
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.AppDatabase
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.RemoteTvShowPagingDataSource
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiResponse
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiService
@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class TvShowRepository(
     private val appDatabase: AppDatabase,
@@ -33,7 +34,7 @@ class TvShowRepository(
     // Offline
     override fun getTvShows(sortBy: String): Flow<PagingData<TvShow>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
             pagingSourceFactory = {
                 appDatabase.tvShowDao().getTvShows(SortUtils.getSortedQuery(sortBy, TV_SHOW_TABLE))
             }
@@ -44,7 +45,7 @@ class TvShowRepository(
     // Online
     override fun getPopularTvShows(): Flow<PagingData<TvShow>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
             pagingSourceFactory = {
                 RemoteTvShowPagingDataSource(
                     TypeRequestDataTvShow.TVSHOW_POPULAR,
@@ -59,7 +60,7 @@ class TvShowRepository(
     // Online
     override fun getOnTheAirTvShows(): Flow<PagingData<TvShow>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
             pagingSourceFactory = {
                 RemoteTvShowPagingDataSource(
                     TypeRequestDataTvShow.TVSHOW_ON_THE_AIR,
@@ -71,10 +72,24 @@ class TvShowRepository(
             pagingData.map { it.toTvShow() }
         }
 
+    override fun getTopRatedTvShows(): Flow<PagingData<TvShow>> =
+        Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
+            pagingSourceFactory = {
+                RemoteTvShowPagingDataSource(
+                    TypeRequestDataTvShow.TVSHOW_TOP_RATED,
+                    apiService,
+                    appDatabase
+                )
+            }
+        ).flow.map { pagingData ->
+            pagingData.map { it.toTvShow() }
+        }
+
     // Online
     override fun getSearchTvShows(query: String?): Flow<PagingData<TvShow>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
             pagingSourceFactory = {
                 RemoteTvShowPagingDataSource(
                     TypeRequestDataTvShow.TVSHOW_SEARCH,
@@ -102,9 +117,9 @@ class TvShowRepository(
                     try {
                         val response = apiService.getDetailTvShow(tvShowId)
                         emit(ApiResponse.Success(response))
-                    } catch (e: Exception) {
+                    } catch (e: IOException) {
                         e.printStackTrace()
-                        emit(ApiResponse.Error(e.toString()))
+                        emit(ApiResponse.Error(e.message.toString()))
                     }
                 }
 
@@ -116,7 +131,7 @@ class TvShowRepository(
     // Offline
     override fun getFavoriteTvShows(): Flow<PagingData<TvShowDetail>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 60),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false, maxSize = 120),
             pagingSourceFactory = { appDatabase.tvShowDao().getListFavoriteTvShows() }
         ).flow.map { pagingData ->
             pagingData.map { it.toTvShowDetail()!! }

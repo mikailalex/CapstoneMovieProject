@@ -1,6 +1,5 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.domain.usecase
 
-import androidx.lifecycle.asFlow
 import androidx.paging.PagingData
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.Resource
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.Movie
@@ -14,6 +13,8 @@ class MovieInteractor(private val movieRepository: IMovieRepository) : MovieUseC
     override fun getPopularMovies(): Flow<PagingData<Movie>> = movieRepository.getPopularMovies()
 
     override fun getNowPlayingMovies(): Flow<PagingData<Movie>> = movieRepository.getNowPlayingMovies()
+
+    override fun getTopRatedMovies(): Flow<PagingData<Movie>> = movieRepository.getTopRatedMovies()
 
     override fun getSearchMovies(query: String?): Flow<PagingData<Movie>> = movieRepository.getSearchMovies(query)
 

@@ -1,15 +1,15 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.bumiayu.dicoding.capstonemovieproject.HomeActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.bumiayu.dicoding.capstonemovieproject.R
+import com.bumiayu.dicoding.capstonemovieproject.ui.HomeActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delayMillis = 10L
+    private val delayMillis = 1000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

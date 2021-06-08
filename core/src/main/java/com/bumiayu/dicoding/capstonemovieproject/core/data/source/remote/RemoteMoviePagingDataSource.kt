@@ -1,12 +1,11 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.TypeRequestDataMovie
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.AppDatabase
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.MovieEntity
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.RemoteKeys
-import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.AppDatabase
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiService
 import com.bumiayu.dicoding.capstonemovieproject.core.utils.ext.toListMovieEntity
 import com.bumptech.glide.load.HttpException
@@ -25,11 +24,30 @@ class RemoteMoviePagingDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieEntity> {
         // Initial load params.key == null
         val page = params.key ?: startingPageIndex
-        Log.d("0000", " $typeRequest ${params.key} $idRemoteKey")
         return try {
             when (typeRequest) {
-                TypeRequestDataMovie.MOVIE_POPULAR -> {
+                TypeRequestDataMovie.MOVIE_SEARCH -> {
                     idRemoteKey = 1
+                    val response = apiService.getSearchMovies(query = query, page = page)
+                    val movieEntity = response.results.toListMovieEntity()
+
+                    val nextKey = if (movieEntity.isEmpty()) {
+                        null
+                    } else {
+                        appDataBase.movieDao().insertMovies(movieEntity)
+                        page + 1
+                    }
+                    appDataBase.remoteKeysDao().insert(
+                        RemoteKeys(page, page - 1, nextKey, idRemoteKey)
+                    )
+                    LoadResult.Page(
+                        data = movieEntity,
+                        prevKey = if (page == startingPageIndex) null else page - 1,
+                        nextKey = nextKey
+                    )
+                }
+                TypeRequestDataMovie.MOVIE_POPULAR -> {
+                    idRemoteKey = 2
                     val response = apiService.getPopularMovies(page = page)
                     val movieEntity = response.results.toListMovieEntity()
 
@@ -49,7 +67,7 @@ class RemoteMoviePagingDataSource(
                     )
                 }
                 TypeRequestDataMovie.MOVIE_NOW_PLAYING -> {
-                    idRemoteKey = 2
+                    idRemoteKey = 3
                     val response = apiService.getNowPlayingMovies(page = page)
                     val movieEntity = response.results.toListMovieEntity()
 
@@ -68,9 +86,9 @@ class RemoteMoviePagingDataSource(
                         nextKey = nextKey
                     )
                 }
-                TypeRequestDataMovie.MOVIE_SEARCH -> {
-                    idRemoteKey = 3
-                    val response = apiService.getSearchMovies(query = query, page = page)
+                TypeRequestDataMovie.MOVIE_TOP_RATED -> {
+                    idRemoteKey = 4
+                    val response = apiService.getTopRatedMovies(page = page)
                     val movieEntity = response.results.toListMovieEntity()
 
                     val nextKey = if (movieEntity.isEmpty()) {
@@ -87,12 +105,13 @@ class RemoteMoviePagingDataSource(
                         prevKey = if (page == startingPageIndex) null else page - 1,
                         nextKey = nextKey
                     )
-
                 }
             }
         } catch (exception: IOException) {
             return LoadResult.Error(exception)
         } catch (exception: HttpException) {
+            return LoadResult.Error(exception)
+        } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }
     }

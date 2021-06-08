@@ -1,7 +1,5 @@
 package com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room
 
-import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
@@ -30,5 +28,5 @@ interface MovieDao {
     suspend fun insertDetailMovie(movie: MovieDetailEntity)
 
     @Update(entity = MovieDetailEntity::class)
-    fun updateDetailMovie(movie: MovieDetailEntity)
+    suspend fun updateDetailMovie(movie: MovieDetailEntity)
 }

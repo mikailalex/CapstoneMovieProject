@@ -1,9 +1,12 @@
-package com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room
+package com.bumiayu.dicoding.capstonemovieproject.core.data.source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.entities.*
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.MovieDao
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.RemoteKeysDao
+import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.room.TvShowDao
 
 @Database(
     entities = [MovieEntity::class, MovieDetailEntity::class, TvShowEntity::class, TvShowDetailEntity::class, RemoteKeys::class],

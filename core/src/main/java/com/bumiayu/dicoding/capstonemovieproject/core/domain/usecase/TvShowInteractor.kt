@@ -12,7 +12,9 @@ class TvShowInteractor(private val tvShowRepository: ITvShowRepository): TvShowU
 
     override fun getPopularTvShows(): Flow<PagingData<TvShow>> = tvShowRepository.getPopularTvShows()
 
-    override fun getTvShowOnTheAir(): Flow<PagingData<TvShow>> = tvShowRepository.getOnTheAirTvShows()
+    override fun getOnTheAirTvShows(): Flow<PagingData<TvShow>> = tvShowRepository.getOnTheAirTvShows()
+
+    override fun getTopRatedTvShows(): Flow<PagingData<TvShow>> = tvShowRepository.getTopRatedTvShows()
 
     override fun getSearchTvShows(query: String?): Flow<PagingData<TvShow>> = tvShowRepository.getSearchTvShows(query)
 
