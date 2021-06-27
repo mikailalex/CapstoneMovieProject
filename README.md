@@ -19,4 +19,4 @@ Materi yang dipelajari:
   
 # Preview
 
-![Demo](https://user-images.githubusercontent.com/67632360/123531005-0b6a1800-d72b-11eb-961e-2813a9c62900.gif)
+![Demo](https://user-images.githubusercontent.com/67632360/123531199-b6c79c80-d72c-11eb-9923-bbb8949062fc.gif)
