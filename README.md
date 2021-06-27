@@ -23,6 +23,7 @@ Beberapa hal yang aplikasi ini terapkan
 # Sertifikat
 
 https://www.dicoding.com/certificates/MRZMG2D60ZYQ
+
 ![gambar](https://user-images.githubusercontent.com/67632360/123537592-6ebf6e80-d75a-11eb-8d91-99c74877b608.png)
 
 # Preview
