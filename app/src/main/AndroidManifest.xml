@@ -14,14 +14,13 @@
         android:theme="@style/Theme.CapstoneMovieProject">
         <activity android:name=".ui.detail.DetailActivity" />
         <activity android:name=".ui.splash.SplashActivity">
-
-        </activity>
-        <activity android:name=".ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.HomeActivity">
         </activity>
     </application>
 
