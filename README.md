@@ -3,28 +3,28 @@
 
 Ini adalah repositori dari submission akhir dari kelas dicoding Menjadi Android Developer Expert
 
-Kelas ini ditujukan bagi Android Developer yang ingin menjadi Android Developer Expert dengan skill yang sering digunakan di dunia industri. Di akhir kelas, siswa dapat membuat aplikasi yang scalable dan maintainable dengan menerapkan berbagai macam komponen yang sering digunakan di dunia industri.
+Aplikasi ini berguna untuk menampilkan film dan acara tv yang populer, sedang tayang, rating tertinggi, dll. database berasal dari https://www.themoviedb.org/
+data film dan acara tv yang telah tampil akan disimpan di penyimpanan lokal dan dapat ditampilkan secara offline. terdapat fitur favorite juga untuk menampilkan film atau acara tv favorite anda
 
-Materi yang dipelajari:
+Beberapa hal yang aplikasi ini terapkan
 
-  -Clean Architecture : Berbagai macam design pattern yang biasa digunakan dalam pengembangan aplikasi Android seperti Clean Architecture untuk membangun aplikasi yang tertata dan mudah dipelihara.
+  -Clean Architecture : Menerapkan 3 lapisan clean archtecture yaitu presentation, domain, dan data sehingga code menjadi mudah dibaca dan mudah dikembangkan.
   
-  -Reactive Programming : Implementasi paradigma pemrograman deklaratif menggunakan dua library yang sudah cukup terkenal, yakni RX dan Coroutine Flow. 
+  -Reactive Programming : Implementasi paradigma pemrograman deklaratif menggunakan library Coroutine Flow. 
   
-  -Dependency Injection : Teknik untuk membangun aplikasi yang kokoh melalui penggunaan Dagger dan Koin.
+  -Dependency Injection : Teknik untuk membangun aplikasi yang kokoh melalui penggunaan Koin.
   
-  -Modularization : Cara membangun aplikasi berskala besar melalui paham Modularization untuk membuat module, baik berupa Android Library maupun Dynamic Feature. 
+  -Modularization : Aplikasi dibangun dengan tambahan Android library "core" dan dynamic feature "favorite".
   
-  -Capstone Proyek Aplikasi Android : Menguji pemahaman siswa dalam implementasi pengetahuan dengan cara menerapkan Clean Architecture, Dependency Injection, Reactive Programming, dan Modularization pada aplikasi dengan tema bebas.
+  -Performance : Pencegahan memory leak dengan leakCannary.
   
-  -Continuous Integration : Proses otomatisasi untuk mempermudah pengujian aplikasi.
-  
-  -Performance : Best practice mengenai aspek aplikasi yang dapat ditingkatkan performanya beserta cara implementasinya.
-  
-  -Security : Best practice mengenai aspek keamanan aplikasi beserta cara implementasinya.
-  
-  -Build App with Useful Libraries : Cara menggunakan library yang sering digunakan oleh perusahaan atau industri global seperti Timber, Firebase Crashlytics, Shimmer, Lottie, dan MapBox.
-  
+  -Security : Request network menerapkan certificate pinning, SQLite / database lokal dienkripsi dengan SQLite Chipper.
+
+# Sertifikat
+
+https://www.dicoding.com/certificates/MRZMG2D60ZYQ
+![gambar](https://user-images.githubusercontent.com/67632360/123537592-6ebf6e80-d75a-11eb-8d91-99c74877b608.png)
+
 # Preview
 
 ![Demo](https://user-images.githubusercontent.com/67632360/123531199-b6c79c80-d72c-11eb-9923-bbb8949062fc.gif)
