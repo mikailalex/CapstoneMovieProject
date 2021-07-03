@@ -1,26 +1,28 @@
 # CapstoneMovieProject
 [![CircleCI](https://circleci.com/gh/mikailalex/CapstoneMovieProject.svg?style=svg)](circleci.com/pipelines/github/mikailalex/CapstoneMovieProject)
 
-Ini adalah repositori dari submission akhir dari kelas dicoding Menjadi Android Developer Expert
+This is last submission from dicoding class "Menjadi Android Developer Expert"
 
-Aplikasi ini berguna untuk menampilkan film dan acara tv yang populer, sedang tayang, rating tertinggi, dll. database berasal dari https://www.themoviedb.org/
-data film dan acara tv yang telah tampil akan disimpan di penyimpanan lokal dan dapat ditampilkan secara offline. terdapat fitur favorite juga untuk menampilkan film atau acara tv favorite anda
+This app is useful for showing popular, currently airing, highest rated movies and tv shows, etc. the database comes from https://www.themoviedb.org/ the data of movies and tv shows that have been shown will be stored in local storage and can be viewed offline. There is also a favorite feature to display your favorite movies or TV shows that you have marked
 
-Beberapa hal yang aplikasi ini terapkan
 
-  -Clean Architecture : Menerapkan 3 lapisan clean archtecture yaitu presentation, domain, dan data sehingga code menjadi mudah dibaca dan mudah dikembangkan.
-  
-  -Reactive Programming : Implementasi paradigma pemrograman deklaratif menggunakan library Coroutine Flow. 
-  
-  -Dependency Injection : Teknik untuk membangun aplikasi yang kokoh melalui penggunaan Koin.
-  
-  -Modularization : Aplikasi dibangun dengan tambahan Android library "core" dan dynamic feature "favorite".
-  
-  -Performance : Pencegahan memory leak dengan leakCannary.
-  
-  -Security : Request network menerapkan certificate pinning, SQLite / database lokal dienkripsi dengan SQLite Chipper.
+Some of the things this app applies
 
-# Sertifikat
+  -Kotlin
+
+  -MVVM using Clean Architecture
+  
+  -Reactive Programming = Coroutine Flow
+  
+  -Dependency Injection = Koin
+  
+  -Modularization = Android library "core" and dynamic feature "favorite"
+  
+  -Security = Request network with certificate pinning, SQLite / local database encrypt with SQLite Chipper, obfuscate
+  
+  -ViewBinding, retrofit, room, glide, etc
+
+# Certificate
 
 https://www.dicoding.com/certificates/MRZMG2D60ZYQ
 
