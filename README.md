@@ -12,6 +12,8 @@ Some of the things this app applies
 
   -MVVM using Clean Architecture
   
+  -Pagination = Unlimited scrolling
+  
   -Reactive Programming = Coroutine Flow
   
   -Dependency Injection = Koin
