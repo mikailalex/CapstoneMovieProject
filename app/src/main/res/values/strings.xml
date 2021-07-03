@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CapstoneMovieProject</string>
+    <string name="app_name">Capstone Movie</string>
     <string name="title_favorite">Favorite Module</string>
     <string name="logo">Icon logo</string>
     <string name="movie">Movie</string>
