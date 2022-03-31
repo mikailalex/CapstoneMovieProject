@@ -1,6 +1,5 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isInvisible
@@ -22,7 +21,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@SuppressLint  //to pass circleCI LINTer
 class DetailActivity : BaseActivity<ActivityDetailBinding>({ ActivityDetailBinding.inflate(it) }) {
 
     companion object {

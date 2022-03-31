@@ -1,6 +1,5 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,7 +11,6 @@ import com.bumiayu.dicoding.capstonemovieproject.ui.movie.MovieViewModel
 import com.bumiayu.dicoding.capstonemovieproject.ui.tv.TvShowViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@SuppressLint  //to pass circleCI LINTer
 class HomeActivity : BaseActivity<ActivityHomeBinding>({ ActivityHomeBinding.inflate(it) }) {
 
     private lateinit var navController: NavController
