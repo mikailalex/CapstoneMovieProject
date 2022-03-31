@@ -50,7 +50,7 @@ object SSLCertificateConfigurator {
     private fun getCertificate(context: Context): Certificate? {
         // Loading CAs from file
         val certificateFactory: CertificateFactory? = CertificateFactory.getInstance("X.509")
-        return context.resources.openRawResource(R.raw.themoviedb_org)
+        return context.resources.openRawResource(R.raw.themoviedb_org2)
             .use { cert -> certificateFactory?.generateCertificate(cert) }
     }
 }
