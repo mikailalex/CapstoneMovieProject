@@ -8,7 +8,6 @@ import com.bumiayu.dicoding.capstonemovieproject.core.data.source.local.AppDatab
 import com.bumiayu.dicoding.capstonemovieproject.core.data.source.remote.network.ApiService
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.repository.IMovieRepository
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.repository.ITvShowRepository
-import com.bumiayu.dicoding.capstonemovieproject.core.utils.SSLCertificateConfigurator
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
@@ -17,9 +16,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.X509TrustManager
 
 val databaseModule = module {
     single {
@@ -36,15 +33,7 @@ val databaseModule = module {
 
 val networkModule = module {
     single {
-        val trustManagerFactory = SSLCertificateConfigurator.getTrustManager(androidContext())
-        val trustManagers = trustManagerFactory.trustManagers
-        if (trustManagers.size != 1 || trustManagers[0] !is X509TrustManager) {
-            throw IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers))
-        }
-        val trustManager = trustManagers[0] as X509TrustManager
-
         OkHttpClient.Builder()
-            .sslSocketFactory(SSLCertificateConfigurator.getSSLConfiguration(androidContext()).socketFactory, trustManager)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
@@ -64,3 +53,5 @@ val repositoryModule = module {
     single<IMovieRepository> { MovieRepository(get(), get()) }
     single<ITvShowRepository> { TvShowRepository(get(), get()) }
 }
+
+val coreModules = listOf(databaseModule, networkModule, repositoryModule)

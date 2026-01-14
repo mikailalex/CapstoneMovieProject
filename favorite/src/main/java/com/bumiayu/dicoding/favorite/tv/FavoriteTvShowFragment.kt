@@ -16,13 +16,13 @@ import com.bumiayu.dicoding.capstonemovieproject.ui.tv.TvShowViewModel
 import com.bumiayu.dicoding.favorite.databinding.FragmentFavoriteTvShowBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FavoriteTvShowFragment :
     BaseFragment<FragmentFavoriteTvShowBinding>({ FragmentFavoriteTvShowBinding.inflate(it) }),
     FavoriteTvShowAdapter.IOnClickListener {
 
-    private val viewModel: TvShowViewModel by sharedViewModel()
+    private val viewModel: TvShowViewModel by activityViewModel()
     private val adapterTvShow = FavoriteTvShowAdapter(this)
 
     override fun FragmentFavoriteTvShowBinding.onViewCreated(savedInstanceState: Bundle?) {

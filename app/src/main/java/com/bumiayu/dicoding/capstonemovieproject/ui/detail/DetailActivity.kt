@@ -35,7 +35,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>({ ActivityDetailBindi
 
     override fun ActivityDetailBinding.onCreate(savedInstanceState: Bundle?) {
 
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         id = intent.getIntExtra(EXTRA_ID, 0)
         category = intent.getStringExtra(EXTRA_CATEGORY).toString()

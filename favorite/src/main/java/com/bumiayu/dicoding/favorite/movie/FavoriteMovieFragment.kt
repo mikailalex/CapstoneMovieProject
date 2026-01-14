@@ -16,13 +16,13 @@ import com.bumiayu.dicoding.capstonemovieproject.ui.movie.MovieViewModel
 import com.bumiayu.dicoding.favorite.databinding.FragmentFavoriteMovieBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FavoriteMovieFragment :
     BaseFragment<FragmentFavoriteMovieBinding>({ FragmentFavoriteMovieBinding.inflate(it) }),
     FavoriteMovieAdapter.IOnClickListener {
 
-    private val viewModel: MovieViewModel by sharedViewModel()
+    private val viewModel: MovieViewModel by activityViewModel()
     private val adapterMovie = FavoriteMovieAdapter(this)
 
     override fun FragmentFavoriteMovieBinding.onViewCreated(savedInstanceState: Bundle?) {

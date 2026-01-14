@@ -18,3 +18,5 @@ val viewModelModule = module {
     viewModel { MovieViewModel(get()) }
     viewModel { TvShowViewModel(get()) }
 }
+
+val appModules = listOf(useCaseModule, viewModelModule)

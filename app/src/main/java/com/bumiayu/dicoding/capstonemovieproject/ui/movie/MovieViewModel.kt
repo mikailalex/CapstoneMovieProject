@@ -1,8 +1,6 @@
 package com.bumiayu.dicoding.capstonemovieproject.ui.movie
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,15 +8,33 @@ import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.Resource
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.Movie
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.model.movie.MovieDetail
 import com.bumiayu.dicoding.capstonemovieproject.core.domain.usecase.MovieUseCase
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 
 class MovieViewModel(private val useCase: MovieUseCase) : ViewModel() {
 
     private lateinit var movie: MovieDetail
 
+    private val searchQuery = MutableStateFlow("")
+
     fun setMovie(movie: MovieDetail) {
         this.movie = movie
     }
+
+    fun setSearchQuery(query: String) {
+        searchQuery.value = query
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    val searchMovies: Flow<PagingData<Movie>> = searchQuery
+        .debounce(400)
+        .filter { it.isNotEmpty() }
+        .distinctUntilChanged()
+        .flatMapLatest { query ->
+            useCase.getSearchMovies(query)
+        }
+        .cachedIn(viewModelScope)
 
     val getMovies: Flow<PagingData<Movie>> = useCase.getMovies("Title").cachedIn(viewModelScope)
 
@@ -30,9 +46,6 @@ class MovieViewModel(private val useCase: MovieUseCase) : ViewModel() {
 
     val getTopRatedMovies: Flow<PagingData<Movie>> =
         useCase.getTopRatedMovies().cachedIn(viewModelScope)
-
-    fun getSearchMovies(query: String): LiveData<PagingData<Movie>> =
-        useCase.getSearchMovies(query).cachedIn(viewModelScope).asLiveData()
 
     fun getDetailsMovie(movieId: Int): Flow<Resource<MovieDetail>> =
         useCase.getDetailsMovie(movieId)
